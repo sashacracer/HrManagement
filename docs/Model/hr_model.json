@@ -1,0 +1,1163 @@
+{
+  "tables": [
+    {
+      "name": "Departments",
+      "title": "Подразделения",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int",
+          "description": "Идентификатор подразделения",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Name",
+          "type": "nvarchar(120)",
+          "description": "Наименование подразделения",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Code",
+          "type": "nvarchar(20)",
+          "description": "Уникальный код подразделения",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "ParentDepartmentId",
+          "type": "int",
+          "description": "Вышестоящее подразделение",
+          "key": "FK",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "unique": [
+        "Name",
+        "Code"
+      ],
+      "checks": [],
+      "existing": true
+    },
+    {
+      "name": "Positions",
+      "title": "Должности",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int",
+          "description": "Идентификатор должности",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Name",
+          "type": "nvarchar(120)",
+          "description": "Уникальное наименование должности",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "SalaryRate",
+          "type": "decimal(12,2)",
+          "description": "Базовый оклад должности",
+          "key": "",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "unique": [
+        "Name"
+      ],
+      "checks": [],
+      "existing": true
+    },
+    {
+      "name": "StaffUnits",
+      "title": "Штатные единицы",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int",
+          "description": "Идентификатор штатной позиции",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "DepartmentId",
+          "type": "int",
+          "description": "Подразделение штатной позиции",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "PositionId",
+          "type": "int",
+          "description": "Должность штатной позиции",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Quantity",
+          "type": "decimal(5,2)",
+          "description": "Количество предусмотренных ставок",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "SalaryMin",
+          "type": "decimal(12,2)",
+          "description": "Минимальный оклад",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "SalaryMax",
+          "type": "decimal(12,2)",
+          "description": "Максимальный оклад",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EffectiveFrom",
+          "type": "date",
+          "description": "Дата начала действия позиции",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EffectiveTo",
+          "type": "date",
+          "description": "Дата закрытия позиции",
+          "key": "",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "unique": [],
+      "checks": [
+        "[Quantity] > 0",
+        "[SalaryMin] >= 0 AND [SalaryMax] >= [SalaryMin]",
+        "[EffectiveTo] IS NULL OR [EffectiveTo] >= [EffectiveFrom]"
+      ],
+      "existing": false
+    },
+    {
+      "name": "Employees",
+      "title": "Сотрудники",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int",
+          "description": "Идентификатор сотрудника",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "PersonnelNumber",
+          "type": "nvarchar(20)",
+          "description": "Уникальный табельный номер",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "LastName",
+          "type": "nvarchar(80)",
+          "description": "Фамилия",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "FirstName",
+          "type": "nvarchar(80)",
+          "description": "Имя",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "MiddleName",
+          "type": "nvarchar(80)",
+          "description": "Отчество",
+          "key": "",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "BirthDate",
+          "type": "date",
+          "description": "Дата рождения",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "HireDate",
+          "type": "date",
+          "description": "Дата первого приёма на работу",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Email",
+          "type": "nvarchar(160)",
+          "description": "Уникальный адрес электронной почты",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Phone",
+          "type": "nvarchar(30)",
+          "description": "Контактный телефон",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Status",
+          "type": "nvarchar(20)",
+          "description": "Active, OnLeave или Dismissed",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "DepartmentId",
+          "type": "int",
+          "description": "Текущее подразделение",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "PositionId",
+          "type": "int",
+          "description": "Текущая должность",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Snils",
+          "type": "char(11)",
+          "description": "СНИЛС без разделителей",
+          "key": "",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "Inn",
+          "type": "char(12)",
+          "description": "ИНН физического лица",
+          "key": "",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "unique": [
+        "PersonnelNumber",
+        "Email"
+      ],
+      "checks": [],
+      "existing": true
+    },
+    {
+      "name": "EmploymentContracts",
+      "title": "Трудовые договоры",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "bigint",
+          "description": "Идентификатор трудового договора",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EmployeeId",
+          "type": "int",
+          "description": "Сотрудник, заключивший договор",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "StaffUnitId",
+          "type": "int",
+          "description": "Штатная позиция",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "ContractNumber",
+          "type": "nvarchar(30)",
+          "description": "Уникальный номер договора",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "ContractDate",
+          "type": "date",
+          "description": "Дата заключения договора",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "StartDate",
+          "type": "date",
+          "description": "Дата начала работы",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EndDate",
+          "type": "date",
+          "description": "Окончание срочного договора",
+          "key": "",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "EmploymentType",
+          "type": "nvarchar(30)",
+          "description": "Основная работа или совместительство",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Rate",
+          "type": "decimal(4,2)",
+          "description": "Занимаемая доля ставки",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Salary",
+          "type": "decimal(12,2)",
+          "description": "Оклад, зафиксированный в договоре",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Status",
+          "type": "nvarchar(20)",
+          "description": "Состояние договора",
+          "key": "",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "unique": [
+        "ContractNumber"
+      ],
+      "checks": [
+        "[Rate] > 0 AND [Rate] <= 2",
+        "[Salary] >= 0",
+        "[EndDate] IS NULL OR [EndDate] >= [StartDate]"
+      ],
+      "existing": false
+    },
+    {
+      "name": "PersonnelOrders",
+      "title": "Кадровые приказы",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "bigint",
+          "description": "Идентификатор приказа",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EmployeeId",
+          "type": "int",
+          "description": "Сотрудник, к которому относится приказ",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "ContractId",
+          "type": "bigint",
+          "description": "Основание: трудовой договор",
+          "key": "FK",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "CreatedByUserId",
+          "type": "int",
+          "description": "Автор регистрации приказа",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "OrderNumber",
+          "type": "nvarchar(30)",
+          "description": "Уникальный регистрационный номер",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "OrderDate",
+          "type": "date",
+          "description": "Дата издания приказа",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "OrderType",
+          "type": "nvarchar(30)",
+          "description": "Приём, перевод, увольнение или отпуск",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EffectiveDate",
+          "type": "date",
+          "description": "Дата вступления в силу",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Reason",
+          "type": "nvarchar(500)",
+          "description": "Основание кадровой операции",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "FilePath",
+          "type": "nvarchar(500)",
+          "description": "Путь к электронной копии",
+          "key": "",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "unique": [
+        "OrderNumber"
+      ],
+      "checks": [],
+      "existing": false
+    },
+    {
+      "name": "LeaveTypes",
+      "title": "Виды отпусков",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "smallint",
+          "description": "Идентификатор вида отпуска",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Code",
+          "type": "nvarchar(20)",
+          "description": "Уникальный код вида отпуска",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Name",
+          "type": "nvarchar(100)",
+          "description": "Наименование вида отпуска",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "IsPaid",
+          "type": "bit",
+          "description": "Признак оплачиваемого отпуска",
+          "key": "",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "unique": [
+        "Code"
+      ],
+      "checks": [],
+      "existing": false
+    },
+    {
+      "name": "Leaves",
+      "title": "Отпуска",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "bigint",
+          "description": "Идентификатор оформленного отпуска",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EmployeeId",
+          "type": "int",
+          "description": "Сотрудник",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "LeaveTypeId",
+          "type": "smallint",
+          "description": "Вид отпуска",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "OrderId",
+          "type": "bigint",
+          "description": "Приказ об отпуске",
+          "key": "FK",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "StartDate",
+          "type": "date",
+          "description": "Первый день отпуска",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EndDate",
+          "type": "date",
+          "description": "Последний день отпуска",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "CalendarDays",
+          "type": "smallint",
+          "description": "Количество календарных дней",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Status",
+          "type": "nvarchar(20)",
+          "description": "Запланирован, утверждён, отменён",
+          "key": "",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "unique": [],
+      "checks": [
+        "[EndDate] >= [StartDate]",
+        "[CalendarDays] > 0"
+      ],
+      "existing": false
+    },
+    {
+      "name": "Absences",
+      "title": "Фактические отсутствия",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int",
+          "description": "Идентификатор отсутствия",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EmployeeId",
+          "type": "int",
+          "description": "Сотрудник",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Type",
+          "type": "nvarchar(40)",
+          "description": "Отпуск, больничный, командировка и др.",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "StartDate",
+          "type": "date",
+          "description": "Дата начала отсутствия",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EndDate",
+          "type": "date",
+          "description": "Дата окончания отсутствия",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "DocumentNumber",
+          "type": "nvarchar(60)",
+          "description": "Номер подтверждающего документа",
+          "key": "",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "Comment",
+          "type": "nvarchar(500)",
+          "description": "Примечание к отсутствию",
+          "key": "",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "LeaveId",
+          "type": "bigint",
+          "description": "Оформленный отпуск, если отсутствие связано с ним",
+          "key": "FK",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "unique": [],
+      "checks": [],
+      "existing": true
+    },
+    {
+      "name": "EmployeeDocuments",
+      "title": "Документы сотрудников",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "bigint",
+          "description": "Идентификатор документа",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EmployeeId",
+          "type": "int",
+          "description": "Владелец документа",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "DocumentType",
+          "type": "nvarchar(50)",
+          "description": "Паспорт, СНИЛС, ИНН и др.",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Series",
+          "type": "nvarchar(20)",
+          "description": "Серия документа",
+          "key": "",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "Number",
+          "type": "nvarchar(50)",
+          "description": "Номер документа",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "IssueDate",
+          "type": "date",
+          "description": "Дата выдачи",
+          "key": "",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "IssuedBy",
+          "type": "nvarchar(300)",
+          "description": "Орган, выдавший документ",
+          "key": "",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "ExpiresAt",
+          "type": "date",
+          "description": "Дата окончания действия",
+          "key": "",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "FilePath",
+          "type": "nvarchar(500)",
+          "description": "Путь к защищённой электронной копии",
+          "key": "",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "unique": [],
+      "checks": [],
+      "existing": false
+    },
+    {
+      "name": "EducationRecords",
+      "title": "Образование и квалификация",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "bigint",
+          "description": "Идентификатор записи об образовании",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EmployeeId",
+          "type": "int",
+          "description": "Сотрудник",
+          "key": "FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EducationLevel",
+          "type": "nvarchar(50)",
+          "description": "Уровень образования",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Institution",
+          "type": "nvarchar(250)",
+          "description": "Образовательная организация",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Specialty",
+          "type": "nvarchar(200)",
+          "description": "Специальность или направление",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Qualification",
+          "type": "nvarchar(200)",
+          "description": "Присвоенная квалификация",
+          "key": "",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "DocumentNumber",
+          "type": "nvarchar(50)",
+          "description": "Номер диплома или свидетельства",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "GraduationYear",
+          "type": "smallint",
+          "description": "Год окончания обучения",
+          "key": "",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "unique": [],
+      "checks": [
+        "[GraduationYear] BETWEEN 1900 AND 2200"
+      ],
+      "existing": false
+    },
+    {
+      "name": "UserAccounts",
+      "title": "Учётные записи",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int",
+          "description": "Идентификатор пользователя",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Login",
+          "type": "nvarchar(60)",
+          "description": "Уникальный логин",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "PasswordHash",
+          "type": "nvarchar(256)",
+          "description": "Хеш пароля, кодированный Base64",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "PasswordSalt",
+          "type": "nvarchar(128)",
+          "description": "Индивидуальная соль, Base64",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "DisplayName",
+          "type": "nvarchar(160)",
+          "description": "Имя пользователя в интерфейсе",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Role",
+          "type": "nvarchar(40)",
+          "description": "Основная роль текущего интерфейса; поле совместимости",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "IsActive",
+          "type": "bit",
+          "description": "Разрешён ли вход",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EmployeeId",
+          "type": "int",
+          "description": "Связанный сотрудник",
+          "key": "FK",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "unique": [
+        "Login"
+      ],
+      "checks": [],
+      "existing": true
+    },
+    {
+      "name": "Roles",
+      "title": "Роли доступа",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "smallint",
+          "description": "Идентификатор роли",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Code",
+          "type": "nvarchar(30)",
+          "description": "Уникальный системный код роли",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Name",
+          "type": "nvarchar(100)",
+          "description": "Наименование роли",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "Description",
+          "type": "nvarchar(500)",
+          "description": "Назначение и область полномочий",
+          "key": "",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "unique": [
+        "Code",
+        "Name"
+      ],
+      "checks": [],
+      "existing": false
+    },
+    {
+      "name": "UserRoles",
+      "title": "Назначения ролей",
+      "fields": [
+        {
+          "name": "UserAccountId",
+          "type": "int",
+          "description": "Учётная запись",
+          "key": "PK, FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "RoleId",
+          "type": "smallint",
+          "description": "Назначенная роль",
+          "key": "PK, FK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "AssignedAt",
+          "type": "datetime2",
+          "description": "Время назначения роли",
+          "key": "",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "unique": [],
+      "checks": [],
+      "existing": false
+    },
+    {
+      "name": "AuditEntries",
+      "title": "Журнал действий",
+      "fields": [
+        {
+          "name": "Id",
+          "type": "bigint",
+          "description": "Идентификатор события аудита",
+          "key": "PK",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "UserAccountId",
+          "type": "int",
+          "description": "Автор действия; NULL для системного события",
+          "key": "FK",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "Action",
+          "type": "nvarchar(80)",
+          "description": "Вид выполненного действия",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EntityName",
+          "type": "nvarchar(80)",
+          "description": "Тип затронутого объекта",
+          "key": "",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "EntityId",
+          "type": "nvarchar(80)",
+          "description": "Ключ затронутой записи",
+          "key": "",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "CreatedAt",
+          "type": "datetime2",
+          "description": "Дата и время события",
+          "key": "",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "unique": [],
+      "checks": [],
+      "existing": true
+    }
+  ],
+  "relations": [
+    [
+      "Departments",
+      "ParentDepartmentId",
+      "Departments",
+      "Id"
+    ],
+    [
+      "StaffUnits",
+      "DepartmentId",
+      "Departments",
+      "Id"
+    ],
+    [
+      "StaffUnits",
+      "PositionId",
+      "Positions",
+      "Id"
+    ],
+    [
+      "Employees",
+      "DepartmentId",
+      "Departments",
+      "Id"
+    ],
+    [
+      "Employees",
+      "PositionId",
+      "Positions",
+      "Id"
+    ],
+    [
+      "EmploymentContracts",
+      "EmployeeId",
+      "Employees",
+      "Id"
+    ],
+    [
+      "EmploymentContracts",
+      "StaffUnitId",
+      "StaffUnits",
+      "Id"
+    ],
+    [
+      "PersonnelOrders",
+      "EmployeeId",
+      "Employees",
+      "Id"
+    ],
+    [
+      "PersonnelOrders",
+      "ContractId",
+      "EmploymentContracts",
+      "Id"
+    ],
+    [
+      "PersonnelOrders",
+      "CreatedByUserId",
+      "UserAccounts",
+      "Id"
+    ],
+    [
+      "Leaves",
+      "EmployeeId",
+      "Employees",
+      "Id"
+    ],
+    [
+      "Leaves",
+      "LeaveTypeId",
+      "LeaveTypes",
+      "Id"
+    ],
+    [
+      "Leaves",
+      "OrderId",
+      "PersonnelOrders",
+      "Id"
+    ],
+    [
+      "Absences",
+      "EmployeeId",
+      "Employees",
+      "Id"
+    ],
+    [
+      "Absences",
+      "LeaveId",
+      "Leaves",
+      "Id"
+    ],
+    [
+      "EmployeeDocuments",
+      "EmployeeId",
+      "Employees",
+      "Id"
+    ],
+    [
+      "EducationRecords",
+      "EmployeeId",
+      "Employees",
+      "Id"
+    ],
+    [
+      "UserAccounts",
+      "EmployeeId",
+      "Employees",
+      "Id"
+    ],
+    [
+      "UserRoles",
+      "UserAccountId",
+      "UserAccounts",
+      "Id"
+    ],
+    [
+      "UserRoles",
+      "RoleId",
+      "Roles",
+      "Id"
+    ],
+    [
+      "AuditEntries",
+      "UserAccountId",
+      "UserAccounts",
+      "Id"
+    ]
+  ]
+}

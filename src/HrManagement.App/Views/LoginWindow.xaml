@@ -1,0 +1,69 @@
+<Window x:Class="HrManagement.App.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Управление кадрами — вход"
+        Width="960"
+        Height="620"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.05*" />
+            <ColumnDefinition Width="0.95*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Background="{StaticResource PrimaryBrush}">
+            <Grid Margin="58">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel>
+                    <Border Width="54" Height="54" Background="#3C5B88" CornerRadius="14" HorizontalAlignment="Left">
+                        <TextBlock Text="УК" Foreground="White" FontSize="20" FontWeight="Bold"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <TextBlock Margin="0,24,0,0" Text="Управление кадрами" Foreground="White"
+                               FontSize="32" FontWeight="SemiBold" />
+                    <TextBlock Margin="0,10,30,0" Foreground="#CBD8EA" FontSize="16" TextWrapping="Wrap"
+                               Text="Единое рабочее пространство для кадрового учёта, документов и контроля отсутствий." />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                    <TextBlock Text="✓  Личные карточки сотрудников" Foreground="#E8F0FB" FontSize="16" Margin="0,8" />
+                    <TextBlock Text="✓  Приём, перевод и увольнение" Foreground="#E8F0FB" FontSize="16" Margin="0,8" />
+                    <TextBlock Text="✓  Отпуска и кадровая отчётность" Foreground="#E8F0FB" FontSize="16" Margin="0,8" />
+                </StackPanel>
+
+                <TextBlock Grid.Row="2" Text="Версия 1.0 · учебный проект" Foreground="#96ABC8" />
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="1" Background="White">
+            <StackPanel Width="320" VerticalAlignment="Center">
+                <TextBlock Text="Вход в систему" FontSize="28" FontWeight="SemiBold" Foreground="#243B64" />
+                <TextBlock Margin="0,8,0,30" Text="Введите данные учётной записи" Foreground="#6B778C" FontSize="14" />
+
+                <TextBlock Text="Логин" Foreground="#33415C" FontWeight="SemiBold" />
+                <TextBox x:Name="LoginBox" Margin="0,8,0,18" Text="hr" Style="{StaticResource InputStyle}" />
+
+                <TextBlock Text="Пароль" Foreground="#33415C" FontWeight="SemiBold" />
+                <PasswordBox x:Name="PasswordBox" Margin="0,8,0,10" Padding="12,9"
+                             BorderBrush="#CCD5E3" Password="Hr2026!" />
+
+                <TextBlock x:Name="ErrorText" Foreground="#C0392B" Height="38" TextWrapping="Wrap" />
+                <Button x:Name="SignInButton" Content="Войти" Height="44"
+                        Style="{StaticResource PrimaryButton}" Click="SignInButton_Click" IsDefault="True" />
+
+                <Border Margin="0,26,0,0" Padding="14" Background="#F4F7FB" CornerRadius="8">
+                    <TextBlock Foreground="#64748B" TextWrapping="Wrap">
+                        <Run Text="Учебная учётная запись: " />
+                        <Run Text="hr / Hr2026!" FontWeight="SemiBold" />
+                    </TextBlock>
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,16 @@
+.vs/
+**/bin/
+**/obj/
+*.user
+*.suo
+TestResults/
+*.trx
+src/HrManagement.App/appsettings.Local.json
+
+.DS_Store
+*.mdf
+*.ldf
+*.bak
+*.log
+src/HrManagement.App/appsettings.json
+Database/001_create_database.sql
